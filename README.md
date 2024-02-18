@@ -1,6 +1,4 @@
 # reactor-kafka-sample
-# Nome do Projeto
-
 Este projeto é uma aplicação Spring Boot 3.0 que demonstra a integração reativa entre o Spring Boot e o Apache Kafka usando o Project Reactor. O objetivo principal é explorar as capacidades reativas do Kafka para processamento de streams de dados em tempo real, proporcionando um sistema altamente responsivo e escalável. Utilizamos Java 17, uma escolha moderna que oferece as últimas melhorias de linguagem e performance, juntamente com o MongoDB, um banco de dados NoSQL flexível, para armazenamento de dados. O Lombok é empregado para minimizar o boilerplate code, permitindo-nos concentrar na lógica de negócios. Este projeto serve como um exemplo prático para desenvolvedores que buscam implementar sistemas reativos com Kafka no ecossistema Spring.
 
 
