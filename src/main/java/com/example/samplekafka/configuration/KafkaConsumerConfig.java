@@ -18,7 +18,7 @@ public class KafkaConsumerConfig {
 
     private String bootstrapServers = "localhost:9092";
 
-    private String topic = "customer-topic";
+    private String topic = "consumer-topic";
     @Bean
     public ReceiverOptions<String, Customer> kafkaReceiverOptions() {
         Map<String, Object> props = new HashMap<>();

@@ -1,11 +1,13 @@
 package com.example.samplekafka.model.entity;
 
 import lombok.Getter;
+import lombok.ToString;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document
 @Getter
+@ToString
 public class Customer {
     @Id
     private String id;
@@ -23,17 +25,5 @@ public class Customer {
         this.age = age;
         this.email = email;
         this.phoneNumber = phoneNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "Customer{" +
-                "id='" + id + '\'' +
-                ", firsName='" + firsName + '\'' +
-                ", lastName='" + lastName + '\'' +
-                ", age=" + age +
-                ", email='" + email + '\'' +
-                ", phoneNumber='" + phoneNumber + '\'' +
-                '}';
     }
 }
