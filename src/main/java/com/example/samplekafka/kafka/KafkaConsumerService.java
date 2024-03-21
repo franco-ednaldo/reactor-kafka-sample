@@ -13,6 +13,7 @@ import reactor.kafka.receiver.ReceiverRecord;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +26,11 @@ public class KafkaConsumerService {
 
     private final KafkaProducerService kafkaProducerService;
 
+    private AtomicInteger messagesReceived = new AtomicInteger(0);
+    private long startTime = 0;
+    private long endTime = 0;
+
+
     @PostConstruct
     public void consume() {
         KafkaReceiver.create(kafkaReceiverOptions)
@@ -35,13 +41,26 @@ public class KafkaConsumerService {
                 .flatMap(kafkaProducerService::producer)
                 .subscribe();
     }
-
     private Mono<Customer> read(ReceiverRecord<String, Customer> r) {
         Customer customer = r.value();
-        log.info("Recebida a mensagem: {}", customer);
+
+        if (messagesReceived.get() == 0) {
+            startTime = System.currentTimeMillis();
+        }
+
+
+        var customerSaved = this.customerService.save(customer);
+        messagesReceived.incrementAndGet();
+        // log.info("Recebida a mensagem: {}", customerSaved);
         r.receiverOffset().acknowledge();
 
-        return Mono.just(customer);
+        if (messagesReceived.get() == 500000) {
+            endTime = System.currentTimeMillis();
+            long totalTime = endTime - startTime;
+            System.out.println("Tempo total de consumo de " + messagesReceived.get() + " mensagens: " + (totalTime / 60000.0) + " ms");
+        }
+
+        return customerSaved;
     }
 
 }

@@ -20,7 +20,7 @@ public class KafkaProducerService {
     public Mono<Void> producer(final Customer customer) {
         final var record = SenderRecord.create(new ProducerRecord<String, Object>(TOPIC, customer), 0);
         return this.kafkaSender.send(Mono.just(record))
-                .doFirst(() -> log.info("Try to send message to {} with payload", TOPIC, customer))
+                //.doFirst(() -> log.info("Try to send message to {} with payload", TOPIC, customer))
                 .onErrorResume(error -> Mono.error(new RuntimeException("Message didn't send", error)))
                 .then();
     }
